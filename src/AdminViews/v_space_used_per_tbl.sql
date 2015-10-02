@@ -17,13 +17,13 @@ SELECT
 		,b.mbytes AS megabytes
 		,a.rows AS rowcount
 		,a.unsorted_rows AS unsorted_rowcount
-		,CASE WHEN a.rows = 0 then 0  
-              ELSE ROUND((a.unsorted_rows::FLOAT / a.rows::FLOAT) * 100, 5) 
-         END AS pct_unsorted
+		,CASE WHEN a.rows = 0 then 0
+			ELSE ROUND((a.unsorted_rows::FLOAT / a.rows::FLOAT) * 100, 5)
+		END AS pct_unsorted
 		,CASE WHEN a.rows = 0 THEN 'n/a'
-              WHEN (a.unsorted_rows::FLOAT / a.rows::FLOAT) * 100 >= 20 THEN 'VACUUM recommended' 
-              ELSE 'n/a' 
-         END AS recommendation
+			WHEN (a.unsorted_rows::FLOAT / a.rows::FLOAT) * 100 >= 20 THEN 'VACUUM recommended'
+			ELSE 'n/a'
+		END AS recommendation
 FROM
        (
        SELECT
@@ -53,5 +53,4 @@ LEFT OUTER JOIN
        GROUP BY tbl
        ) AS b 
               ON a.id=b.tbl
-ORDER BY 1,3,2
-;
+ORDER BY 1,3,2;
